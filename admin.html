@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | JobHub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-container">
+      <div class="login-logo">Job<span>Hub</span></div>
+      <h2>Admin Login</h2>
+      <form id="loginForm" onsubmit="return false;">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Enter admin password" autocomplete="current-password">
+        </div>
+        <p class="login-error" id="loginError">Incorrect password. Please try again.</p>
+        <button type="submit" class="btn btn-primary btn-full">Login</button>
+      </form>
+      <a href="index.html" class="back-link">Back to Website</a>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">Job<span>Hub</span> <span class="admin-badge">ADMIN</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">View Site</a></li>
+      <li><a href="#" id="logoutBtn" class="logout-link">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard -->
+  <main class="admin-main">
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="jobs">Jobs</button>
+      <button class="tab-btn" data-tab="applications">Applications</button>
+    </div>
+
+    <!-- Jobs Tab -->
+    <div class="tab-content active" id="jobsTab">
+      <div class="admin-header">
+        <h1>Manage Jobs</h1>
+        <button class="btn btn-primary" onclick="openJobModal()">+ Add New Job</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-number" id="totalJobs">0</span>
+          <span class="stat-label">Total Jobs</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" id="activeJobs">0</span>
+          <span class="stat-label">Active</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number" id="totalApplications">0</span>
+          <span class="stat-label">Applications</span>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Job Title</th>
+              <th>Company</th>
+              <th>Location</th>
+              <th>Type</th>
+              <th>Applications</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="jobsTableBody">
+            <!-- Jobs will be inserted here -->
+          </tbody>
+        </table>
+        <div class="no-data" id="noJobs">
+          <p>No jobs found. Click "Add New Job" to create one.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Applications Tab -->
+    <div class="tab-content" id="applicationsTab">
+      <div class="admin-header">
+        <h1>Applications</h1>
+      </div>
+
+      <div class="filters-row">
+        <select id="appJobFilter">
+          <option value="">All Jobs</option>
+        </select>
+        <select id="appStatusFilter">
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="reviewed">Reviewed</option>
+          <option value="interviewed">Interviewed</option>
+          <option value="accepted">Accepted</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Applicant</th>
+              <th>Job</th>
+              <th>Email</th>
+              <th>Applied</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="applicationsTableBody">
+            <!-- Applications will be inserted here -->
+          </tbody>
+        </table>
+        <div class="no-data" id="noApplications">
+          <p>No applications found.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Job Modal -->
+  <div class="modal" id="jobFormModal">
+    <div class="modal-content modal-large">
+      <button class="modal-close" onclick="closeJobFormModal()">&times;</button>
+      <h2 id="jobFormTitle">Add New Job</h2>
+      <form id="jobForm">
+        <input type="hidden" id="jobId">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobTitle">Job Title *</label>
+            <input type="text" id="jobTitle" name="title" required placeholder="e.g., Senior Developer">
+          </div>
+          <div class="form-group">
+            <label for="jobCompany">Company *</label>
+            <input type="text" id="jobCompany" name="company" required placeholder="e.g., TechCorp">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobLocation">Location *</label>
+            <input type="text" id="jobLocation" name="location" required placeholder="e.g., Dublin, Remote">
+          </div>
+          <div class="form-group">
+            <label for="jobType">Job Type *</label>
+            <select id="jobType" name="type" required>
+              <option value="">Select type</option>
+              <option value="full-time">Full Time</option>
+              <option value="part-time">Part Time</option>
+              <option value="contract">Contract</option>
+              <option value="internship">Internship</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobCategory">Category *</label>
+            <select id="jobCategory" name="category" required>
+              <option value="">Select category</option>
+              <option value="technology">Technology</option>
+              <option value="design">Design</option>
+              <option value="marketing">Marketing</option>
+              <option value="sales">Sales</option>
+              <option value="finance">Finance</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="education">Education</option>
+              <option value="engineering">Engineering</option>
+              <option value="customer-service">Customer Service</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="jobSalary">Salary *</label>
+            <input type="text" id="jobSalary" name="salary" required placeholder="e.g., €50,000 - €70,000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="jobDescription">Description *</label>
+          <textarea id="jobDescription" name="description" rows="3" required placeholder="Brief description of the role..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="jobRequirements">Requirements (one per line) *</label>
+          <textarea id="jobRequirements" name="requirements" rows="4" required placeholder="5+ years of experience&#10;Strong communication skills&#10;Bachelor's degree"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="jobResponsibilities">Responsibilities (one per line) *</label>
+          <textarea id="jobResponsibilities" name="responsibilities" rows="4" required placeholder="Lead team projects&#10;Develop new features&#10;Collaborate with designers"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="jobTags">Skills/Tags (comma separated) *</label>
+          <input type="text" id="jobTags" name="tags" required placeholder="e.g., React, JavaScript, Node.js">
+        </div>
+        <div class="form-group">
+          <label for="jobStatus">Status</label>
+          <select id="jobStatus" name="status">
+            <option value="active">Active</option>
+            <option value="paused">Paused</option>
+            <option value="closed">Closed</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeJobFormModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Job</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Application Modal -->
+  <div class="modal" id="applicationModal">
+    <div class="modal-content modal-large">
+      <button class="modal-close" onclick="closeApplicationModal()">&times;</button>
+      <h2>Application Details</h2>
+      <div id="applicationDetails">
+        <!-- Application details will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <h3>Confirm Delete</h3>
+      <p id="deleteMessage">Are you sure you want to delete this item?</p>
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

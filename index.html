@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobHub | Find Your Dream Job</title>
+  <meta name="description" content="Browse thousands of job opportunities across all industries. Find your perfect career match today!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">Job<span>Hub</span></a>
+    <ul class="nav-links">
+      <li><a href="#jobs">Browse Jobs</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Find Your <span>Dream Job</span> Today</h1>
+      <p>Discover thousands of job opportunities from top companies worldwide</p>
+
+      <!-- Search Bar -->
+      <div class="search-container">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Job title, keywords, or company...">
+          <select id="locationFilter">
+            <option value="">All Locations</option>
+            <option value="remote">Remote</option>
+            <option value="dublin">Dublin</option>
+            <option value="cork">Cork</option>
+            <option value="galway">Galway</option>
+            <option value="limerick">Limerick</option>
+            <option value="london">London</option>
+            <option value="new york">New York</option>
+          </select>
+          <button class="btn btn-primary" id="searchBtn">Search Jobs</button>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number" id="totalJobs">0</span>
+          <span class="stat-label">Available Jobs</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="totalCompanies">0</span>
+          <span class="stat-label">Companies</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">10k+</span>
+          <span class="stat-label">Happy Candidates</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section id="categories" class="categories">
+    <h2 class="section-title">Browse by Category</h2>
+    <div class="categories-grid" id="categoriesGrid">
+      <!-- Categories will be inserted here -->
+    </div>
+  </section>
+
+  <!-- Jobs Section -->
+  <section id="jobs" class="jobs">
+    <div class="jobs-header">
+      <h2 class="section-title">Latest Job Openings</h2>
+      <div class="jobs-filters">
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+        </select>
+        <select id="typeFilter">
+          <option value="">All Types</option>
+          <option value="full-time">Full Time</option>
+          <option value="part-time">Part Time</option>
+          <option value="contract">Contract</option>
+          <option value="internship">Internship</option>
+        </select>
+        <select id="sortFilter">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="salary-high">Highest Salary</option>
+          <option value="salary-low">Lowest Salary</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="jobs-grid" id="jobsGrid">
+      <!-- Jobs will be inserted here -->
+    </div>
+
+    <div class="no-jobs" id="noJobs">
+      <p>No jobs found matching your criteria.</p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="about-content">
+      <h2 class="section-title">Why Choose JobHub?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Smart Matching</h3>
+          <p>Find jobs that match your skills and experience with our intelligent search system.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏢</div>
+          <h3>Top Companies</h3>
+          <p>Access opportunities from leading companies across all industries.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Easy Apply</h3>
+          <p>Apply to jobs quickly with our streamlined application process.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔔</div>
+          <h3>Job Alerts</h3>
+          <p>Get notified when new jobs matching your preferences are posted.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">Job<span>Hub</span></div>
+      <p>Your gateway to amazing career opportunities.</p>
+      <div class="footer-links">
+        <a href="#jobs">Browse Jobs</a>
+        <a href="#categories">Categories</a>
+        <a href="#about">About</a>
+      </div>
+      <p class="copyright">&copy; 2026 JobHub. All rights reserved.</p>
+      <a href="admin.html" class="admin-link">Admin Dashboard</a>
+    </div>
+  </footer>
+
+  <!-- Job Detail Modal -->
+  <div class="modal" id="jobModal">
+    <div class="modal-content modal-large">
+      <button class="modal-close" onclick="closeJobModal()">&times;</button>
+      <div id="jobDetails">
+        <!-- Job details will be inserted here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Apply Modal -->
+  <div class="modal" id="applyModal">
+    <div class="modal-content modal-large">
+      <button class="modal-close" onclick="closeApplyModal()">&times;</button>
+      <h2>Apply for <span id="applyJobTitle"></span></h2>
+      <form id="applyForm">
+        <input type="hidden" id="applyJobId">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="applicantName">Full Name *</label>
+            <input type="text" id="applicantName" name="name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="applicantEmail">Email *</label>
+            <input type="email" id="applicantEmail" name="email" required placeholder="john@example.com">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="applicantPhone">Phone *</label>
+            <input type="tel" id="applicantPhone" name="phone" required placeholder="+353 89 XXX XXXX">
+          </div>
+          <div class="form-group">
+            <label for="applicantLocation">Location *</label>
+            <input type="text" id="applicantLocation" name="location" required placeholder="Dublin, Ireland">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="applicantLinkedin">LinkedIn Profile</label>
+          <input type="url" id="applicantLinkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile">
+        </div>
+        <div class="form-group">
+          <label for="applicantPortfolio">Portfolio/Website</label>
+          <input type="url" id="applicantPortfolio" name="portfolio" placeholder="https://yourwebsite.com">
+        </div>
+        <div class="form-group">
+          <label for="applicantResume">Resume/CV Link *</label>
+          <input type="url" id="applicantResume" name="resume" required placeholder="Link to your resume (Google Drive, Dropbox, etc.)">
+        </div>
+        <div class="form-group">
+          <label for="applicantCover">Cover Letter</label>
+          <textarea id="applicantCover" name="coverLetter" rows="5" placeholder="Tell us why you're a great fit for this role..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal" id="successModal">
+    <div class="modal-content">
+      <div class="success-icon">✓</div>
+      <h3>Application Submitted!</h3>
+      <p>Thank you for applying. We'll review your application and get back to you soon.</p>
+      <button class="btn btn-primary" onclick="closeSuccessModal()">OK</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
